@@ -1,0 +1,12 @@
+version: "3"
+services:
+  mongo-db:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGOO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=mongo-dev-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./init-mongodb.js:/docker-entrypoint-initdb.d/init-mongodb.js:ro

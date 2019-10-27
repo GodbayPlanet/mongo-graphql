@@ -1,6 +1,7 @@
 node_modules
 docker/.env
 docker/mongo-data
+docker/mongodb-data
 
 .history
 .env

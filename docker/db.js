@@ -3,10 +3,9 @@ const { NODE_ENV } = require("../env-donfig");
 
 const config = require("../config").get(NODE_ENV);
 
-const options = {
-  useNewUrlParser: true,
+const connectionOptions = {
   reconnectInterval: 500,
-  connectTimeoutMS: 10000
+  reconnectTries: 3
 };
 
 const { username, password, host, port, name: databaseName } = config.database;
@@ -22,5 +21,5 @@ connection.on("disconnected", () => console.info("Disconnected from MongoDB"));
 
 exports.connection = connection;
 exports.connect = () => {
-  return mongoose.connect(dbURL, options);
+  return mongoose.connect(dbURL, connectionOptions);
 };

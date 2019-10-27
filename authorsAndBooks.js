@@ -14,19 +14,17 @@ const book = new Book({
   authorId: "5db4d553198df2526728597a"
 });
 
-function addAuthor() {
-  author
+async function addAuthor() {
+  return author
     .save()
-    .then(authorData =>
-      console.log("Successfully added new author", authorData)
-    )
+    .then(authorData => authorData)
     .catch(err => console.log("An error occured", err));
 }
 
-function addBook() {
-  book
+async function addBook() {
+  return book
     .save()
-    .then(bookData => console.log("Successfully added new book", bookData))
+    .then(bookData => bookData)
     .catch(err => console.log("An error occured", err));
 }
 
@@ -44,9 +42,11 @@ function listAllBooks() {
     .catch(err => console.log(err));
 }
 
-module.exports = {
-  addAuthor,
-  addBook,
-  listAllAuthors,
-  listAllBooks
-};
+async function addDataToDB() {
+  await addAuthor();
+  listAllAuthors();
+  await addBook();
+  listAllBooks();
+}
+
+module.exports = addDataToDB;

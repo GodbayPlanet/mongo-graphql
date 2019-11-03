@@ -6,6 +6,7 @@ const {
   GraphQLSchema
 } = require("graphql");
 const Author = require("../models/author");
+const Book = require("../models/book");
 
 const AuthorType = new GraphQLObjectType({
   name: "Author",
@@ -16,8 +17,20 @@ const AuthorType = new GraphQLObjectType({
   })
 });
 
+const BookType = new GraphQLObjectType({
+  name: "Book",
+  fields: () => ({
+    id: { type: GraphQLString },
+    name: { type: GraphQLString },
+    genre: { type: GraphQLString },
+    isbn: { type: GraphQLString },
+    year: { type: GraphQLInt },
+    authorId: { type: GraphQLString }
+  })
+});
+
 const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
+  name: "RootQuery",
   fields: {
     author: {
       type: AuthorType,
@@ -32,6 +45,19 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(AuthorType),
       resolve() {
         return Author.find({});
+      }
+    },
+    book: {
+      type: BookType,
+      args: { book_name: { type: GraphQLString } },
+      resolve(_, args) {
+        return Book.findOne({ name: args.book_name }).then(book => book);
+      }
+    },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve() {
+        return Book.find({});
       }
     }
   }

@@ -1,6 +1,12 @@
 const { makeExecutableSchema } = require("graphql-tools");
-const Author = require("../models/author");
-const Book = require("../models/book");
+const {
+  getAuthorByName,
+  getAuthors,
+  saveAuthor,
+  updateAuthor,
+  deleteAuthor
+} = require("../service/authorService");
+const { getBookByName, getBooks } = require("../service/bookService");
 
 const schema = `
   type Author {
@@ -37,18 +43,15 @@ const sdlSchema = makeExecutableSchema({
   typeDefs: schema,
   resolvers: {
     Query: {
-      author: (_, args) =>
-        Author.findOne({ name: args.name }).then(author => author),
-      authors: () => Author.find({}),
-      book: (_, args) => Book.findOne({ name: args.name }).then(book => book),
-      books: () => Book.find({})
+      author: (_, args) => getAuthorByName(args),
+      authors: () => getAuthors(),
+      book: (_, args) => getBookByName(args),
+      books: () => getBooks()
     },
     Mutation: {
-      addAuthor: (_, args) =>
-        new Author({ name: args.name, age: args.age }).save(),
-      updateAuthor: (_, args) =>
-        Author.findOneAndUpdate(args.id, { name: args.name, age: args.age }),
-      deleteAuthor: (_, args) => Author.findByIdAndRemove(args.id)
+      addAuthor: (_, args) => saveAuthor(args),
+      updateAuthor: (_, args) => updateAuthor(args),
+      deleteAuthor: (_, args) => deleteAuthor(args)
     }
   }
 });

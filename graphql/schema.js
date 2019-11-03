@@ -35,9 +35,9 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     author: {
       type: AuthorType,
-      args: { author_name: { type: new GraphQLNonNull(GraphQLString) } },
+      args: { name: { type: new GraphQLNonNull(GraphQLString) } },
       async resolve(_, args) {
-        const author = await Author.findOne({ name: args.author_name });
+        const author = await Author.findOne({ name: args.name });
         return author;
       }
     },
@@ -49,9 +49,9 @@ const RootQuery = new GraphQLObjectType({
     },
     book: {
       type: BookType,
-      args: { book_name: { type: new GraphQLNonNull(GraphQLString) } },
+      args: { name: { type: new GraphQLNonNull(GraphQLString) } },
       async resolve(_, args) {
-        const book = await Book.findOne({ name: args.book_name });
+        const book = await Book.findOne({ name: args.name });
         return book;
       }
     },

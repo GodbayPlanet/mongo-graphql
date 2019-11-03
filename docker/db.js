@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { NODE_ENV } = require("../env-donfig");
+const { NODE_ENV } = require("../env-config");
 
 const config = require("../config").get(NODE_ENV);
 

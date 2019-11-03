@@ -5,7 +5,7 @@ const {
   DEV_DB_NAME,
   MONGO_USERNAME,
   MONGO_PASSWORD
-} = require("./env-donfig");
+} = require("./env-config");
 
 const config = {
   dev: {

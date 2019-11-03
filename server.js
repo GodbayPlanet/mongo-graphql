@@ -2,7 +2,7 @@ const express = require("express");
 const graphqlHTTP = require("express-graphql");
 
 const db = require("./docker/db");
-const { PORT } = require("./env-donfig");
+const { PORT } = require("./env-config");
 const addDataToDB = require("./authorsAndBooks");
 const schema = require("./graphql/schema");
 const sdlSchema = require("./graphql/SDLSchema.js");

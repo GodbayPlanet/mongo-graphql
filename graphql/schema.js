@@ -3,6 +3,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLSchema
 } = require("graphql");
 const Author = require("../models/author");
@@ -11,7 +12,7 @@ const Book = require("../models/book");
 const AuthorType = new GraphQLObjectType({
   name: "Author",
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: GraphQLString },
     age: { type: GraphQLInt }
   })
@@ -20,7 +21,7 @@ const AuthorType = new GraphQLObjectType({
 const BookType = new GraphQLObjectType({
   name: "Book",
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
     isbn: { type: GraphQLString },
@@ -34,11 +35,10 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     author: {
       type: AuthorType,
-      args: { author_name: { type: GraphQLString } },
-      resolve(_, args) {
-        return Author.findOne({ name: args.author_name }).then(
-          author => author
-        );
+      args: { author_name: { type: new GraphQLNonNull(GraphQLString) } },
+      async resolve(_, args) {
+        const author = await Author.findOne({ name: args.author_name });
+        return author;
       }
     },
     authors: {
@@ -49,9 +49,10 @@ const RootQuery = new GraphQLObjectType({
     },
     book: {
       type: BookType,
-      args: { book_name: { type: GraphQLString } },
-      resolve(_, args) {
-        return Book.findOne({ name: args.book_name }).then(book => book);
+      args: { book_name: { type: new GraphQLNonNull(GraphQLString) } },
+      async resolve(_, args) {
+        const book = await Book.findOne({ name: args.book_name });
+        return book;
       }
     },
     books: {

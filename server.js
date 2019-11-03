@@ -21,7 +21,7 @@ db.connection.on("connected", () => {
 app.use(
   "/graphql",
   graphqlHTTP({
-    schema: sdlSchema,
+    schema,
     graphiql: true
   })
 );

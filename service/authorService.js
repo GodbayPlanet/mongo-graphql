@@ -1,11 +1,11 @@
 const Author = require("../models/author");
 
-const getAuthorById = author_id => {
-  return Author.findById(author_id);
+const getAuthorById = id => {
+  return Author.findById(id);
 };
 
-const getAuthorByName = author_name => {
-  return Author.findOne({ name: author_name });
+const getAuthorByName = ({ name }) => {
+  return Author.findOne({ name });
 };
 
 const getAuthors = () => {
@@ -13,14 +13,14 @@ const getAuthors = () => {
 };
 
 const saveAuthor = ({ name, age }) => {
-  return new Author({ name: name, age: age }).save();
+  return new Author({ name, age }).save();
 };
 
 const updateAuthor = ({ id, name, age }) => {
-  return Author.findByIdAndUpdate(id, { name: name, age: age });
+  return Author.findByIdAndUpdate(id, { name, age });
 };
 
-const deleteAuthor = id => {
+const deleteAuthor = ({ id }) => {
   return Author.findByIdAndRemove(id);
 };
 

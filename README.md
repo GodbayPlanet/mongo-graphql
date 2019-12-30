@@ -2,7 +2,7 @@
 
 ## Reguirements
 
-#### NodeJs and npm installed on your OS environment.
+#### NodeJs and npm installed on your OS environment
 
 ## DotEnv
 
